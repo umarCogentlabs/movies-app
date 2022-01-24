@@ -6,7 +6,6 @@ interface Props {
 }
 
 export default function MovieRow({ genere_data }: Props) {
-  debugger;
   return (
     <div className='movie-row-container'>
       <div className='generation'>

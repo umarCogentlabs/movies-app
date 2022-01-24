@@ -8,17 +8,10 @@ import MovieDetail from "./components/Home/movie-row/movie/movie_details/MovieDe
 function App() {
   return (
     <div className='App'>
-      {/* <Home /> */}
-
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='/detail' element={<MovieDetail />} />
-          {/* <Route path="teams" element={<Teams />}>
-          <Route path=":teamId" element={<Team />} />
-          <Route path="new" element={<NewTeamForm />} />
-          <Route index element={<LeagueStandings />} />
-        </Route> */}
+          <Route path='/details/:movieID' element={<MovieDetail />} />
         </Routes>
       </BrowserRouter>
     </div>

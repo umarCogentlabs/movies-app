@@ -50,9 +50,12 @@ export default function Home() {
           <h3>Search Movies:</h3>
           <input type='text' />
         </div>
-        {genresWithMovies.map((genere) => {
-          // if (genere.movies)
-          return <MovieRow key={genere.id} genere_data={genere} />;
+        {genresWithMovies.map((genere_movies) => {
+          return (
+            genere_movies.list.length !== 0 && (
+              <MovieRow key={genere_movies.id} genere_data={genere_movies} />
+            )
+          );
         })}
       </div>
     </>

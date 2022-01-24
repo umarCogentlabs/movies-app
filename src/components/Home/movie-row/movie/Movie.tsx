@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
-
-const handleMovieClick = () => {
-  // alert();
-};
+import { useNavigate } from "react-router";
 
 interface Props {
-  movie: { title: string; backdrop_path: string };
+  movie: { id: number; title: string; backdrop_path: string };
 }
-
 export default function Movie({ movie }: Props) {
+  let navigate = useNavigate();
+  const handleMovieClick = () => {
+    navigate(`../details/${movie.id}`);
+  };
+
   const [like, setLike] = useState(false);
   const handleLike = () => {
     setLike(!like);
@@ -22,8 +23,13 @@ export default function Movie({ movie }: Props) {
         <p className='movie-name'>{movie.title}</p>
         <p className='movie-release-date'>November 3 2020</p>
       </div>
-      <div className='like'>
-        <p onClick={handleLike}>{!like ? <p>like</p> : <p>Liked</p>}</p>
+      <div
+        className='like'
+        onClick={(e) => {
+          e.stopPropagation();
+          handleLike();
+        }}>
+        <p>{!like ? <p>Like</p> : <p>Liked</p>}</p>
       </div>
     </div>
   );
