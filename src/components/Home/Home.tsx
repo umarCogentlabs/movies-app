@@ -1,58 +1,47 @@
 import React, { useEffect, useState } from "react";
 import MovieRow from "./movie-row/MovieRow";
 import axios from "axios";
-// import "./styles/style.scss";
 import "./styles/style.scss";
-
 export default function Home() {
-  const [movies, setMovies] = useState<any[]>([]);
-  const [generes, setGenere] = useState<any[]>([]);
+  const [genresWithMovies, setGenresWithMovies] = useState<any[]>([]);
+
+  const filterData = (genres: any[], movies: any[]) => {
+    const newArr = genres.map((genre) => {
+      const newMovies = movies.filter((movie) =>
+        movie.genre_ids.includes(genre.id)
+      );
+
+      return {
+        ...genre,
+        list: newMovies,
+      };
+    });
+
+    setGenresWithMovies(newArr);
+  };
 
   useEffect(() => {
-    console.log("useeffect1");
+    async function fecthData() {
+      //fetching data
+      const genereURL =
+        "https://api.themoviedb.org/3//genre/movie/list?api_key=4ce6fff0da52d2214a794776a6bba549";
 
-    //fetching data
-    const genereURL =
-      "https://api.themoviedb.org/3//genre/movie/list?api_key=4ce6fff0da52d2214a794776a6bba549";
+      const moviesURL =
+        "https://api.themoviedb.org/3/movie/top_rated?api_key=4ce6fff0da52d2214a794776a6bba549";
 
-    const moviesURL =
-      "https://api.themoviedb.org/3/movie/top_rated?api_key=4ce6fff0da52d2214a794776a6bba549";
-    axios
-      .get(moviesURL)
-      .then((res) => {
-        setMovies(res.data.results);
-      })
-      .then(() => {
-        axios.get(genereURL).then((res) => {
-          setGenere(res.data.genres);
-        });
-      });
+      try {
+        const movieData = await axios.get(moviesURL);
+        const genreData = await axios.get(genereURL);
+        const results = movieData.data.results;
+        const genres = genreData.data.genres;
+        filterData(genres, results);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fecthData();
   }, []);
 
-  useEffect(() => {
-    console.log("useeffect2");
-
-    //initializing movies array inside generes
-    generes.forEach((genere) => {
-      genere.movies = [];
-    });
-
-    //mapping movies to genere.movies array
-    movies.forEach((movie) => {
-      movie.genre_ids.forEach((genereID: any) => {
-        generes.forEach((genere) => {
-          genereID === genere.id && genere.movies.push(movie);
-        });
-      });
-    });
-  });
-
-  useEffect(() => {
-    console.log("useeffect3");
-
-    console.log("movies", movies);
-    console.log("genere", generes);
-  });
   return (
     <>
       <div className='container'>
@@ -61,10 +50,10 @@ export default function Home() {
           <h3>Search Movies:</h3>
           <input type='text' />
         </div>
-        {generes.map((genere, i) => {
-          return <MovieRow key={i} genere_data={genere} />;
+        {genresWithMovies.map((genere) => {
+          // if (genere.movies)
+          return <MovieRow key={genere.id} genere_data={genere} />;
         })}
-        <button>123</button>
       </div>
     </>
   );

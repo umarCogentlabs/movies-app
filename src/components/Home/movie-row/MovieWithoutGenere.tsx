@@ -8,7 +8,7 @@ interface Props {
   movie: { title: string; backdrop_path: string };
 }
 
-export default function Movie({ movie }: Props) {
+export default function MovieWithoutGenere({ movie }: Props) {
   const [like, setLike] = useState(false);
   const handleLike = () => {
     setLike(!like);

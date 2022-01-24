@@ -6,6 +6,7 @@
     }
     .search-bar {
         margin-top: 5rem;
+        height: 3rem;
         display: flex;
         justify-content: center;
         h3 {
@@ -17,9 +18,10 @@
             padding: 0 1rem;
         }
     }
+
     //movie row styling
     .movie-row-container {
-        background: #fffaf7;
+        background: #f7fbff;
         padding: 2rem;
         border-radius: 5px;
         margin: 2rem 0 0;
@@ -32,7 +34,7 @@
 
         .movie-row {
             display: flex;
-            justify-content: space-between;
+            // justify-content: space-between;
             flex-wrap: wrap;
 
             //movie styling
