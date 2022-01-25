@@ -5,7 +5,7 @@ import "./styles/style.scss";
 export default function Home() {
   const [genresWithMovies, setGenresWithMovies] = useState<any[]>([]);
 
-  const filterData = (genres: any[], movies: any[]) => {
+  const filterMovies = (genres: any[], movies: any[]) => {
     const newArr = genres.map((genre) => {
       const newMovies = movies.filter((movie) =>
         movie.genre_ids.includes(genre.id)
@@ -13,7 +13,7 @@ export default function Home() {
 
       return {
         ...genre,
-        list: newMovies,
+        movies: newMovies,
       };
     });
 
@@ -34,7 +34,7 @@ export default function Home() {
         const genreData = await axios.get(genereURL);
         const results = movieData.data.results;
         const genres = genreData.data.genres;
-        filterData(genres, results);
+        filterMovies(genres, results);
       } catch (error) {
         console.log(error);
       }
@@ -52,7 +52,7 @@ export default function Home() {
         </div>
         {genresWithMovies.map((genere_movies) => {
           return (
-            genere_movies.list.length !== 0 && (
+            genere_movies.movies.length !== 0 && (
               <MovieRow key={genere_movies.id} genere_data={genere_movies} />
             )
           );

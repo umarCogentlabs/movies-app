@@ -6,7 +6,7 @@ interface Props {
 }
 export default function Movie({ movie }: Props) {
   let navigate = useNavigate();
-  const handleMovieClick = () => {
+  const handleMovieDetailClick = () => {
     navigate(`../details/${movie.id}`);
   };
 
@@ -17,7 +17,7 @@ export default function Movie({ movie }: Props) {
   const sample_img_url: string = `https://www.themoviedb.org/t/p/w600_and_h900_bestv2/${movie.backdrop_path}`;
 
   return (
-    <div className='movie' onClick={handleMovieClick}>
+    <div className='movie' onClick={handleMovieDetailClick}>
       <img src={sample_img_url} alt='sample movie' />
       <div className='movie-details'>
         <p className='movie-name'>{movie.title}</p>
@@ -29,7 +29,7 @@ export default function Movie({ movie }: Props) {
           e.stopPropagation();
           handleLike();
         }}>
-        <p>{!like ? <p>Like</p> : <p>Liked</p>}</p>
+        <p>{like ? <p>Liked</p> : <p>Like</p>}</p>
       </div>
     </div>
   );
