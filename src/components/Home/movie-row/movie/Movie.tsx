@@ -14,6 +14,7 @@ export default function Movie({ movie }: Props) {
   const handleLike = () => {
     setLike(!like);
   };
+
   const sample_img_url: string = `https://www.themoviedb.org/t/p/w600_and_h900_bestv2/${movie.backdrop_path}`;
 
   return (

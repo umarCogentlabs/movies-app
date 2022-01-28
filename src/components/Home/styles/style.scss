@@ -4,8 +4,18 @@
     .heading {
         text-align: center;
     }
+    .user-info {
+        position: absolute;
+        right: 5rem;
+        top: 3rem;
+        text-align: -webkit-center;
+        img {
+            width: 5rem;
+            height: 5rem;
+        }
+    }
     .search-bar {
-        margin-top: 5rem;
+        // margin-top: 5rem;
         height: 3rem;
         display: flex;
         justify-content: center;
@@ -14,8 +24,81 @@
         }
         input {
             font-size: 1.2rem;
-            width: 30%;
+            width: 100%;
             padding: 0 1rem;
+        }
+    }
+    .custom-dropdown {
+        text-align: center;
+        margin-top: 5rem;
+        .dropbtn {
+            // background-color: #4caf50;
+            color: white;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            width: 60rem;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            max-height: 90vh;
+            overflow: hidden auto;
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            width: 100%;
+            .searched-row {
+                cursor: pointer;
+                align-self: center;
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+                display: flex;
+                text-align: left;
+                .image {
+                    min-width: 4rem;
+                    img {
+                        width: 4rem;
+                        border-radius: 2px;
+                    }
+                }
+
+                .movie-details {
+                    padding: 0 1rem;
+                    display: flex;
+                    flex-direction: column;
+                    h4 {
+                        margin: 0.5rem 0 0.2rem 0;
+                    }
+                    .release {
+                        margin: 0;
+                        margin-bottom: 0.5rem;
+                        font-size: 0.8rem;
+                    }
+                }
+            }
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown .dropdown-content {
+            display: block;
+        }
+
+        .dropdown:hover .dropbtn {
+            // background-color: #3e8e41;
         }
     }
 
