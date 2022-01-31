@@ -2,16 +2,16 @@ import React, { useEffect, useState } from "react";
 import MovieRow from "./movie-row/MovieRow";
 import axios from "axios";
 import "./styles/style.scss";
-import Search from "./movie-row/search_movies/Search";
-import APIClient from "../API_Data Fetch/index";
+import SearchDropdown from "./movie-row/search_movies/SearchDropdown";
+import APIClient from "../API_Data_Fetch/index";
 import { useNavigate } from "react-router";
 
 export default function Home() {
   const [genresWithMovies, setGenresWithMovies] = useState<any[]>([]);
   const username = localStorage.getItem("username") || "";
+  let navigate = useNavigate();
 
   const filterMovies = (genres: any[], movies: any[]) => {
-    console.log(process.env);
     const newArr = genres.map((genre) => {
       const newMovies = movies.filter((movie) =>
         movie.genre_ids.includes(genre.id)
@@ -26,7 +26,6 @@ export default function Home() {
     setGenresWithMovies(newArr);
   };
 
-  let navigate = useNavigate();
   const handleLogout = () => {
     localStorage.removeItem("username");
     navigate("../");
@@ -34,9 +33,8 @@ export default function Home() {
 
   useEffect(() => {
     const apiClient = new APIClient();
-    axios.all([apiClient.fecthGeneres(), apiClient.fecthMovies()]).then(
+    axios.all([apiClient.fetchGeneres(), apiClient.fetchMovies()]).then(
       axios.spread((...res) => {
-        console.log(res);
         const generes = res[0].data.genres;
         const movies = res[1].data.results;
         filterMovies(generes, movies);
@@ -57,7 +55,7 @@ export default function Home() {
           <p>{username} </p>
           <button onClick={handleLogout}>Logout</button>
         </div>
-        <Search />
+        <SearchDropdown />
         {genresWithMovies.map(
           (genere_movies) =>
             genere_movies.movies.length !== 0 && (

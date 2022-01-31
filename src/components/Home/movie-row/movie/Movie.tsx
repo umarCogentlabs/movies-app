@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import APIClient from "../../../API_Data_Fetch/index";
 
 interface Props {
   movie: { id: number; title: string; backdrop_path: string };
@@ -10,27 +11,28 @@ export default function Movie({ movie }: Props) {
     navigate(`../details/${movie.id}`);
   };
 
-  const [like, setLike] = useState(false);
+  const [isLiked, setIsLike] = useState(false);
   const handleLike = () => {
-    setLike(!like);
+    setIsLike(!isLiked);
   };
 
-  const sample_img_url: string = `https://www.themoviedb.org/t/p/w600_and_h900_bestv2/${movie.backdrop_path}`;
+  const apiClient = new APIClient();
+  const imgUrl: string = apiClient.fetchMovieImage(movie.backdrop_path) || "";
 
   return (
-    <div className='movie' onClick={handleMovieDetailClick}>
-      <img src={sample_img_url} alt='sample movie' />
-      <div className='movie-details'>
-        <p className='movie-name'>{movie.title}</p>
-        <p className='movie-release-date'>November 3 2020</p>
+    <div className="movie" onClick={handleMovieDetailClick}>
+      <img src={imgUrl} alt="sample movie" />
+      <div className="movie-details">
+        <p className="movie-name">{movie.title}</p>
+        <p className="movie-release-date">November 3 2020</p>
       </div>
       <div
-        className='like'
+        className="like"
         onClick={(e) => {
           e.stopPropagation();
           handleLike();
         }}>
-        <p>{like ? <p>Liked</p> : <p>Like</p>}</p>
+        <p>{isLiked ? <p>Liked</p> : <p>Like</p>}</p>
       </div>
     </div>
   );

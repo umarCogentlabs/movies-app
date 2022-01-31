@@ -3,33 +3,29 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-import APIClient from "../../../../API_Data Fetch/index";
+import APIClient from "../../../../API_Data_Fetch/index";
 
 interface MyFormValues {
   comment: string;
 }
 
-export default function MovieDetail() {
+export default function MovieDetails() {
   const [movieDetails, setMovieDetails] = useState<any>();
   let { movieId } = useParams<{ movieId: string }>();
   const username = localStorage.getItem("username") || "";
-
-  // const addCommentField = (movie_details: any) => {
-  //   movie_details.comments = [];
-  //   setMovieDetails(movie_details);
-  // };
+  const apiClient = new APIClient();
+  const imgUrl: string =
+    apiClient.fetchMovieImage(movieDetails?.backdrop_path) || "";
+  const [comments, setComments] = useState<any>();
 
   useEffect(() => {
-    const apiClient = new APIClient();
-    apiClient.fecthMovieDetails(movieId || "").then((res) => {
+    apiClient.fetchMovieDetails(movieId || "").then((res) => {
       const movie_details = res.data;
-      movie_details.comments = [];
+      if (!movie_details.comments) movie_details.comments = [];
       setMovieDetails(movie_details);
     });
-    debugger;
   }, []);
 
-  const [comments, setComments] = useState<any>();
   let initialValues: MyFormValues = { comment: "" };
   const [initialValuesState, setInitialValues] = useState(initialValues);
 
@@ -40,23 +36,21 @@ export default function MovieDetail() {
       commentingUser: username,
       userComment: values.comment,
     };
-    debugger;
+
     movieDetails.comments = [...movieDetails.comments, commentWithUsername];
-    // debugger;
   };
 
   const CommentSchema = Yup.object().shape({
-    comment: Yup.string().min(10, "Too Short!").required("Required"),
+    comment: Yup.string()
+      .min(10, "Too Short!")
+      .required("Comment field cannot be empty"),
   });
 
   return (
     <div className="movie-detail-container">
       <div className="top-bar-container">
         <div className="image-div">
-          <img
-            src={`${process.env.REACT_APP_IMAGE_URL}${movieDetails?.backdrop_path}`}
-            alt=""
-          />
+          <img src={imgUrl} alt="hi" />
         </div>
         <div className="details">
           <h1>{movieDetails?.title}</h1>
@@ -70,10 +64,9 @@ export default function MovieDetail() {
         </div>
       </div>
       <div className="commments">
-        {/* <h3>Comments:</h3> */}
+        <h3>Comments:</h3>
 
         {movieDetails?.comments?.map((comment: any, i: number) => {
-          debugger;
           return (
             <div key={i} className="comment-section">
               <p className="username">{comment.commentingUser}:</p>

@@ -19,7 +19,6 @@
     }
 
     .search-bar {
-        // margin-top: 5rem;
         height: 3rem;
         display: flex;
         justify-content: center;
@@ -40,7 +39,6 @@
         margin-top: 5rem;
 
         .dropbtn {
-            // background-color: #4caf50;
             color: white;
             font-size: 16px;
             border: none;
@@ -108,10 +106,6 @@
 
         .dropdown .dropdown-content {
             display: block;
-        }
-
-        .dropdown:hover .dropbtn {
-            // background-color: #3e8e41;
         }
     }
 
