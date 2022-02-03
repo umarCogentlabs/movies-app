@@ -29,10 +29,11 @@ function Movie({ movie, likes }: Props) {
   };
 
   const handleLike = () => {
+    debugger;
     setIsLike(!isLiked);
     const isLikedPayload = {
       id: movie.id,
-      isLiked: isLiked,
+      isLiked: !isLiked,
     };
 
     //@ts-ignore

@@ -8,7 +8,7 @@ const setLikeFromPayload = (state: any[], payload: any) => {
   state.forEach((stateItem) => {
     if (stateItem?.id === payload.id) {
       isIDExist = true;
-      payload.isLiked && (stateItem.islike = payload.isLiked);
+      stateItem.islike = payload.isLiked;
     }
   });
 
@@ -18,7 +18,7 @@ const setLikeFromPayload = (state: any[], payload: any) => {
   if (isIDExist === false) {
     let islike = false;
 
-    payload.isLiked && (islike = payload.isLiked);
+    islike = payload.isLiked;
 
     like = {
       id: payload.id,
