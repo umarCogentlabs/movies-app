@@ -59,7 +59,7 @@ export default function Login() {
   useEffect(() => {
     const isUsername = localStorage.getItem("username");
     isUsername && performLogin();
-  });
+  }, []);
 
   return (
     <div className="login-form">

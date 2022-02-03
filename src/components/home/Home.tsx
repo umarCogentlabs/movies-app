@@ -4,13 +4,9 @@ import axios from "axios";
 import "./styles/style.scss";
 import SearchDropdown from "./movie-row/search_movies/SearchDropdown";
 import APIClient from "../common/API/index";
+import { SET_GENERES_WITH_MOVIES } from "../common/redux-constants";
 import { useNavigate } from "react-router";
 import { useDispatch, connect } from "react-redux";
-// import {
-//   incNumber,
-//   decNumber,
-//   setMoviesWithGeneres,
-// } from "../../rewdux/actions/index";
 
 interface reduxProps {
   genereWithMoviesList: any[];
@@ -23,7 +19,7 @@ function Home({ genereWithMoviesList }: reduxProps) {
   const dispatch = useDispatch();
 
   function setMoviesWithGeneres(payload: object[]) {
-    return { type: "SET_GENERES_WITH_MOVIES", payload };
+    return { type: SET_GENERES_WITH_MOVIES, payload };
   }
 
   const filterMovies = (genres: any[], movies: any[]) => {

@@ -1,13 +1,13 @@
 import axios from "axios";
 
 class APIClient {
-  genereUrl?: string;
+  genreUrl?: string;
   moviesUrl?: string;
   movieDetailUrl?: string;
   movieImageUrl?: string;
 
   constructor() {
-    this.genereUrl = process.env.REACT_APP_GENERE_URL;
+    this.genreUrl = process.env.REACT_APP_GENERE_URL;
     this.moviesUrl = process.env.REACT_APP_MOVIES_URL;
     this.movieDetailUrl = process.env.REACT_APP_MOVIE_DETAILS;
     this.movieImageUrl = process.env.REACT_APP_IMAGE_URL;
@@ -18,7 +18,7 @@ class APIClient {
   }
 
   fetchGeneres() {
-    return axios.get(this.genereUrl || "");
+    return axios.get(this.genreUrl || "");
   }
 
   fetchMovieDetails(movieID: string) {

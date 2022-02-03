@@ -1,16 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 import { Formik, Form, Field } from "formik";
+import * as Yup from "yup";
 
-export default function Comments({ errors, touched }: any) {
+interface MyFormValues {
+  comment: string;
+}
+
+export default function Comments({ handleComment }: any) {
+  let initialValues: MyFormValues = { comment: "" };
+  const [initialValuesState, setInitialValues] = useState(initialValues);
+
+  const CommentSchema = Yup.object().shape({
+    comment: Yup.string()
+      .min(10, "Too Short!")
+      .required("Comment field cannot be empty"),
+  });
+
   return (
     <>
-      <Form>
-        <label htmlFor="comment">Comment:</label>
-        <Field id="comment" name="comment" placeholder="Comment" />
-        {errors.comment && touched.comment ? <div>{errors.comment}</div> : null}
+      <Formik
+        initialValues={initialValuesState}
+        enableReinitialize={true}
+        validationSchema={CommentSchema}
+        onSubmit={handleComment}>
+        {({ errors, touched }) => (
+          <Form>
+            <label htmlFor="comment">Comment:</label>
+            <Field id="comment" name="comment" placeholder="Comment" />
+            {errors.comment && touched.comment ? (
+              <div>{errors.comment}</div>
+            ) : null}
 
-        <button type="submit"> Comment</button>
-      </Form>
+            <button type="submit"> Comment</button>
+          </Form>
+        )}
+      </Formik>
     </>
   );
 }

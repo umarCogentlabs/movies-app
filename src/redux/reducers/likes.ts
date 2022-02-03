@@ -1,10 +1,8 @@
 const initialState: object[] = [];
 
 const setLikeFromPayload = (state: any[], payload: any) => {
-  debugger;
   let isIDExist = false;
 
-  //if id exists
   state.forEach((stateItem) => {
     if (stateItem?.id === payload.id) {
       isIDExist = true;
@@ -12,7 +10,6 @@ const setLikeFromPayload = (state: any[], payload: any) => {
     }
   });
 
-  //if id not exist
   let like = {};
 
   if (isIDExist === false) {

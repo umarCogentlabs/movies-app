@@ -45,13 +45,13 @@ export default function Register() {
 
   const userSchema = Yup.object().shape({
     name: Yup.string().min(4, "Too Short!").required("Username Required"),
-    password: Yup.string().min(10, "Too Short!").required("Password Required"),
+    password: Yup.string().min(8, "Too Short!").required("Password Required"),
   });
 
   useEffect(() => {
     const isUsername = localStorage.getItem("username");
     isUsername && performLogin();
-  });
+  }, []);
 
   return (
     <div className="login-form">

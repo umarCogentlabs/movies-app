@@ -6,24 +6,27 @@ import * as Yup from "yup";
 import APIClient from "../../../../common/API/index";
 import Comments from "./Comments";
 import { useDispatch, connect } from "react-redux";
+import {
+  SET_COMMENT,
+  SET_MOVIE_DETAILS,
+} from "../../../../common/redux-constants/index";
+
+function setMovieDetailsArray(payload: object[]) {
+  return { type: SET_MOVIE_DETAILS, payload };
+}
+
+function setComments(payload: {}) {
+  return { type: SET_COMMENT, payload };
+}
 
 interface MyFormValues {
   comment: string;
-}
-function setMovieDetailsArray(payload: object[]) {
-  return { type: "SET_MOVIE_DETAILS", payload };
-}
-
-function setComments(payload: object[]) {
-  return { type: "SET_COMMENT", payload };
 }
 
 function MovieDetails({ genereWithMoviesList, userComments }: any) {
   let { movieId } = useParams<{ movieId: string }>();
   const username = localStorage.getItem("username") || "";
   const apiClient = new APIClient();
-  let initialValues: MyFormValues = { comment: "" };
-  const [initialValuesState, setInitialValues] = useState(initialValues);
   const imgUrl: string =
     apiClient.fetchMovieImage(genereWithMoviesList?.backdrop_path) || "";
   const dispatch = useDispatch();
@@ -44,7 +47,7 @@ function MovieDetails({ genereWithMoviesList, userComments }: any) {
   }, []);
 
   const handleComment = (values: MyFormValues, { resetForm }: any) => {
-    resetForm({ values: initialValues });
+    resetForm();
 
     const commentWithUsername = {
       commentingUser: username,
@@ -55,15 +58,9 @@ function MovieDetails({ genereWithMoviesList, userComments }: any) {
       id: genereWithMoviesList.id,
       comment: commentWithUsername,
     };
-    //@ts-ignore
+
     dispatch(setComments(commentPayload));
   };
-
-  const CommentSchema = Yup.object().shape({
-    comment: Yup.string()
-      .min(10, "Too Short!")
-      .required("Comment field cannot be empty"),
-  });
 
   return (
     <div className="movie-detail-container">
@@ -96,15 +93,7 @@ function MovieDetails({ genereWithMoviesList, userComments }: any) {
           );
         })}
 
-        <Formik
-          initialValues={initialValuesState}
-          enableReinitialize={true}
-          validationSchema={CommentSchema}
-          onSubmit={handleComment}>
-          {({ errors, touched }) => (
-            <Comments errors={errors} touched={touched} />
-          )}
-        </Formik>
+        <Comments handleComment={handleComment} />
       </div>
     </div>
   );
