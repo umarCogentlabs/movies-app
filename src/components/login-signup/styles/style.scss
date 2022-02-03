@@ -1,0 +1,32 @@
+.login-form {
+    justify-content: center;
+    display: grid;
+    grid-row-gap: 10px;
+
+    .form {
+        display: grid !important;
+        grid-row-gap: 10px;
+        margin: 0px auto;
+        max-width: 240px;
+
+        h4 {
+            margin: 0;
+        }
+
+        .errors {
+            color: rgb(184, 72, 72);
+            font-size: 0.8rem;
+        }
+
+        .alternative {
+            margin-bottom: 0;
+        }
+    }
+
+    .register {
+        width: 186px;
+        margin: 0 auto;
+        position: relative;
+        top: -20px;
+    }
+}

@@ -1,0 +1,7 @@
+export const SET_GENERES_WITH_MOVIES = "SET_GENERES_WITH_MOVIES";
+export const SET_LIKE = "SET_LIKE";
+export const SET_COMMENT = "SET_COMMENT";
+export const SET_MOVIE_DETAILS = "SET_MOVIE_DETAILS";
+export const SET_NUMBER = "SET_NUMBER";
+export const DECREMENT = "DECREMENT";
+export const INCREMENT = "INCREMENT";

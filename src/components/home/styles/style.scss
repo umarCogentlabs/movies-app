@@ -1,0 +1,277 @@
+.container {
+    background: linear-gradient(45deg, #6f6d89, transparent);
+    padding: 5rem;
+
+    .heading {
+        text-align: center;
+    }
+
+    .user-info {
+        position: absolute;
+        right: 5rem;
+        top: 3rem;
+        text-align: -webkit-center;
+
+        img {
+            width: 5rem;
+            height: 5rem;
+        }
+    }
+
+    .search-bar {
+        height: 3rem;
+        display: flex;
+        justify-content: center;
+
+        h3 {
+            margin-right: 5rem;
+        }
+
+        input {
+            font-size: 1.2rem;
+            width: 100%;
+            padding: 0 1rem;
+        }
+    }
+
+    .custom-dropdown {
+        text-align: center;
+        margin-top: 5rem;
+
+        .dropbtn {
+            color: white;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            width: 60rem;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            max-height: 90vh;
+            overflow: hidden auto;
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            width: 100%;
+
+            .searched-row {
+                cursor: pointer;
+                align-self: center;
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+                display: flex;
+                text-align: left;
+
+                .image {
+                    min-width: 4rem;
+
+                    img {
+                        width: 4rem;
+                        border-radius: 2px;
+                    }
+                }
+
+                .movie-details {
+                    padding: 0 1rem;
+                    display: flex;
+                    flex-direction: column;
+
+                    h4 {
+                        margin: 0.5rem 0 0.2rem 0;
+                    }
+
+                    .release {
+                        margin: 0;
+                        margin-bottom: 0.5rem;
+                        font-size: 0.8rem;
+                    }
+                }
+            }
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown .dropdown-content {
+            display: block;
+        }
+    }
+
+    .movie-row-container {
+        background: linear-gradient(45deg, #776a73, transparent);
+        background: #d4cbd1;
+        padding: 2rem;
+        border-radius: 5px;
+        margin: 2rem 0 0;
+
+        .generation {
+            p {
+                font-size: 1.2rem;
+                font-weight: bold;
+            }
+        }
+
+        .movie-row {
+            display: flex;
+            flex-wrap: wrap;
+
+            .movie {
+                cursor: pointer;
+                display: flex;
+                flex-direction: column;
+                max-width: 150px;
+                margin: 0 1rem 1rem 0;
+                min-width: 180px;
+                text-align: center;
+                align-items: center;
+                justify-content: space-between;
+
+                img {
+                    width: 150px;
+                    height: auto;
+                    border-radius: 5px;
+                }
+
+                .movie-details {
+                    cursor: text;
+
+                    .movie-name {
+                        font-weight: bold;
+                    }
+
+                    .movie-name,
+                    .movie-release-date {
+                        margin: 0.2rem;
+                    }
+                }
+
+                .like {
+                    margin-top: 1rem;
+                    width: 5rem;
+                    background-color: #efefef;
+                    border-radius: 5px;
+                    user-select: none;
+
+                    a {
+                        text-decoration: none;
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.movie-detail-container {
+    background: linear-gradient(45deg, #6f6d89, transparent);
+    min-height: 100vh;
+
+    .top-bar-container {
+        background: linear-gradient(45deg, #715468, transparent);
+        padding: 5rem;
+
+        .image-div {
+            img {
+                height: 25rem;
+                border-radius: 5px;
+            }
+        }
+
+        display: flex;
+        height: 25rem;
+
+        .details {
+            padding: 1rem 2rem;
+
+            .overview {
+                h4 {
+                    margin-bottom: 5px;
+                }
+
+                p {
+                    margin: 0;
+                }
+            }
+        }
+    }
+
+    .commments {
+        padding: 2rem 5rem;
+
+        .comment-section {
+            background: white;
+            min-height: 4rem;
+            padding: 0.5rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+
+            .username {
+                font-size: 1.3rem;
+                margin: 0;
+                color: #ca3f3f;
+            }
+
+            .comment {
+                margin: 0;
+                padding-left: 3rem;
+            }
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 10rem;
+            margin-top: 2rem;
+
+            label {
+                font-size: 1.2rem;
+                font-weight: 600;
+            }
+
+            input {
+                font-size: 1.2rem;
+                width: 50%;
+                padding: 0.5rem;
+                font-size: 18px;
+                height: 50px;
+                padding: 0 0.75rem;
+                margin: 0;
+                display: inline-block;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                box-sizing: border-box;
+                outline: none;
+                margin: 0;
+                margin-top: 1rem;
+            }
+
+            button {
+                margin-top: 1rem;
+                background: #ef5b77;
+                border: none;
+                color: white;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                cursor: pointer;
+                width: 10%;
+                height: 50px;
+                font-size: 20px;
+                border-radius: 5px;
+            }
+        }
+    }
+}
