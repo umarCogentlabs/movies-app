@@ -12,6 +12,9 @@ interface LoginFormValues {
 }
 export default function Login() {
   let navigate = useNavigate();
+  let initialFormValues: LoginFormValues = { name: "", password: "" };
+  const [initialValues, setInitialValues] = useState(initialFormValues);
+
   const performLogin = () => {
     navigate("../home");
   };
@@ -20,12 +23,10 @@ export default function Login() {
     navigate("../register");
   };
 
-  let initialFormValues: LoginFormValues = { name: "", password: "" };
-  const [initialValues, setInitialValues] = useState(initialFormValues);
-
   const validateLoginInfo = (values: any) => {
     let isLoginMatched = false;
     let loginInfo: any = [];
+
     if (localStorage.getItem("loginInfo")) {
       loginInfo = JSON.parse(localStorage.getItem("loginInfo") || "") || [];
       loginInfo.forEach((login: any) => {

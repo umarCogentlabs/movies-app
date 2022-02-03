@@ -8,6 +8,8 @@ export default function SearchDropdown() {
   const filterSearchResult = (searchResult: []) => {
     setResultMovies(searchResult || []);
   };
+  let navigate = useNavigate();
+  const sample_img_url: string = process.env.REACT_APP_IMAGE_URL || "";
 
   useEffect(() => {
     const searchMoviesList = async () => {
@@ -18,9 +20,6 @@ export default function SearchDropdown() {
     };
     searchMoviesList();
   }, [searchInput]);
-
-  let navigate = useNavigate();
-  const sample_img_url: string = process.env.REACT_APP_IMAGE_URL || "";
 
   const handleSearchClick = (id: any) => {
     navigate(`../details/${id}`);

@@ -1,18 +1,33 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import MovieRow from "./movie-row/MovieRow";
 import axios from "axios";
 import "./styles/style.scss";
 import SearchDropdown from "./movie-row/search_movies/SearchDropdown";
-import APIClient from "../API_Data_Fetch/index";
+import APIClient from "../common/API/index";
 import { useNavigate } from "react-router";
+import { useDispatch, connect } from "react-redux";
+// import {
+//   incNumber,
+//   decNumber,
+//   setMoviesWithGeneres,
+// } from "../../rewdux/actions/index";
 
-export default function Home() {
-  const [genresWithMovies, setGenresWithMovies] = useState<any[]>([]);
+interface reduxProps {
+  genereWithMoviesList: any[];
+}
+
+function Home({ genereWithMoviesList }: reduxProps) {
   const username = localStorage.getItem("username") || "";
   let navigate = useNavigate();
+  const apiClient = new APIClient();
+  const dispatch = useDispatch();
+
+  function setMoviesWithGeneres(payload: object[]) {
+    return { type: "SET_GENERES_WITH_MOVIES", payload };
+  }
 
   const filterMovies = (genres: any[], movies: any[]) => {
-    const newArr = genres.map((genre) => {
+    const filteredMovies = genres.map((genre) => {
       const newMovies = movies.filter((movie) =>
         movie.genre_ids.includes(genre.id)
       );
@@ -23,7 +38,7 @@ export default function Home() {
       };
     });
 
-    setGenresWithMovies(newArr);
+    dispatch(setMoviesWithGeneres(filteredMovies));
   };
 
   const handleLogout = () => {
@@ -32,7 +47,6 @@ export default function Home() {
   };
 
   useEffect(() => {
-    const apiClient = new APIClient();
     axios.all([apiClient.fetchGeneres(), apiClient.fetchMovies()]).then(
       axios.spread((...res) => {
         const generes = res[0].data.genres;
@@ -46,22 +60,20 @@ export default function Home() {
     <>
       <div className="container">
         <h1 className="heading">Movies List</h1>
-
         <div className="user-info">
-          <img
-            src="https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_960_720.png"
-            alt=""
-          />
+          <img src="/assets/user_image.png" alt="" />
           <p>{username} </p>
           <button onClick={handleLogout}>Logout</button>
         </div>
+
         <SearchDropdown />
-        {genresWithMovies.map(
-          (genere_movies) =>
-            genere_movies.movies.length !== 0 && (
+
+        {genereWithMoviesList.map(
+          (genereMovies) =>
+            genereMovies.movies.length !== 0 && (
               <MovieRow
-                key={genere_movies.id}
-                genere_data={genere_movies}
+                key={genereMovies.id}
+                genereData={genereMovies}
                 username={username}
               />
             )
@@ -70,3 +82,11 @@ export default function Home() {
     </>
   );
 }
+
+const mapStateToProps = (state: any) => {
+  return {
+    genereWithMoviesList: state.setMoviesWithGenres,
+  };
+};
+
+export default connect(mapStateToProps)(Home);

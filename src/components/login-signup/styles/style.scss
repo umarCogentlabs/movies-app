@@ -2,6 +2,7 @@
     justify-content: center;
     display: grid;
     grid-row-gap: 10px;
+
     .form {
         display: grid !important;
         grid-row-gap: 10px;
@@ -16,14 +17,15 @@
             color: rgb(184, 72, 72);
             font-size: 0.8rem;
         }
+
         .alternative {
             margin-bottom: 0;
         }
     }
+
     .register {
         width: 186px;
         margin: 0 auto;
-
         position: relative;
         top: -20px;
     }

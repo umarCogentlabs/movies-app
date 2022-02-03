@@ -1,19 +1,42 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import APIClient from "../../../API_Data_Fetch/index";
+import APIClient from "../../../common/API/index";
+import { useDispatch, connect } from "react-redux";
 
 interface Props {
   movie: { id: number; title: string; backdrop_path: string };
+  likes: any[];
 }
-export default function Movie({ movie }: Props) {
+
+function setLike(payload: object[]) {
+  return { type: "SET_LIKE", payload };
+}
+
+function Movie({ movie, likes }: Props) {
   let navigate = useNavigate();
+  const [isLiked, setIsLike] = useState(false);
+  const dispatch = useDispatch();
+
+  let liked = false;
+  likes.forEach((like) => {
+    if (like.id === movie.id) {
+      liked = like.islike;
+    }
+  });
+
   const handleMovieDetailClick = () => {
     navigate(`../details/${movie.id}`);
   };
 
-  const [isLiked, setIsLike] = useState(false);
   const handleLike = () => {
     setIsLike(!isLiked);
+    const isLikedPayload = {
+      id: movie.id,
+      isLiked: isLiked,
+    };
+
+    //@ts-ignore
+    dispatch(setLike(isLikedPayload));
   };
 
   const apiClient = new APIClient();
@@ -32,8 +55,16 @@ export default function Movie({ movie }: Props) {
           e.stopPropagation();
           handleLike();
         }}>
-        <p>{isLiked ? <p>Liked</p> : <p>Like</p>}</p>
+        <p>{liked ? <p>Liked</p> : <p>Like</p>}</p>
       </div>
     </div>
   );
 }
+
+const mapStateToProps = (state: any) => {
+  return {
+    likes: state.setLikes,
+  };
+};
+
+export default connect(mapStateToProps)(Movie);

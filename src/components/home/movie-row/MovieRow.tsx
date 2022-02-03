@@ -2,20 +2,20 @@ import React, { useState } from "react";
 import Movie from "./movie/Movie";
 
 interface Props {
-  genere_data: { id: number; name: string; movies: any[] };
+  genereData: { id: number; name: string; movies: any[] };
   username: string;
 }
 
-export default function MovieRow({ genere_data }: Props) {
+export default function MovieRow({ genereData }: Props) {
   return (
     <div className="movie-row-container">
       <div className="generation">
-        <p>{genere_data.movies.length !== 0 && genere_data.name}</p>
+        <p>{genereData.movies.length !== 0 && genereData.name}</p>
       </div>
 
       <div className="movie-row">
-        {genere_data.movies.length !== 0 &&
-          genere_data.movies.map((movie, i) => {
+        {genereData.movies.length !== 0 &&
+          genereData.movies.map((movie, i) => {
             return <Movie key={i} movie={movie} />;
           })}
       </div>
