@@ -1,25 +1,24 @@
 import { useNavigate } from "react-router";
 import APIClient from "../../../common/API/index";
-import { useDispatch, connect } from "react-redux";
-import { SET_LIKE } from "../../../common/redux-constants";
+import { useDispatch, useSelector } from "react-redux";
+import {} from "../../../../redux-toolkit/likesSlice";
+import { setLike } from "../../../../redux-toolkit/likesSlice";
 
 interface Props {
   movie: { id: number; title: string; backdrop_path: string };
-  likes: any[];
 }
 
-function setLike(payload: {}) {
-  return { type: SET_LIKE, payload };
-}
-
-function Movie({ movie, likes }: Props) {
+function Movie({ movie }: Props) {
   let navigate = useNavigate();
   const dispatch = useDispatch();
   const apiClient = new APIClient();
   const imgUrl: string = apiClient.fetchMovieImage(movie.backdrop_path) || "";
 
+  const { likes } = useSelector((state: any) => state.likesSlice);
+
+  debugger;
   let liked = false;
-  likes.forEach((like) => {
+  likes.forEach((like: any) => {
     if (like.id === movie.id) {
       liked = like.islike;
     }
@@ -57,10 +56,4 @@ function Movie({ movie, likes }: Props) {
   );
 }
 
-const mapStateToProps = (state: any) => {
-  return {
-    likes: state.setLikes,
-  };
-};
-
-export default connect(mapStateToProps)(Movie);
+export default Movie;

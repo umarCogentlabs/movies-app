@@ -4,23 +4,19 @@ import axios from "axios";
 import "./styles/style.scss";
 import SearchDropdown from "./movie-row/search_movies/SearchDropdown";
 import APIClient from "../common/API/index";
-import { SET_GENERES_WITH_MOVIES } from "../common/redux-constants";
 import { useNavigate } from "react-router";
-import { useDispatch, connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setMoviesWithGenres } from "../../redux-toolkit/movieWithGenereSlice";
 
-interface reduxProps {
-  genereWithMoviesList: any[];
-}
-
-function Home({ genereWithMoviesList }: reduxProps) {
+export default function Home() {
   const username = localStorage.getItem("username") || "";
   let navigate = useNavigate();
   const apiClient = new APIClient();
   const dispatch = useDispatch();
 
-  function setMoviesWithGeneres(payload: object[]) {
-    return { type: SET_GENERES_WITH_MOVIES, payload };
-  }
+  const { moviesWithGenres } = useSelector(
+    (state: any) => state.movieWithGenereSlice
+  );
 
   const filterMovies = (genres: any[], movies: any[]) => {
     const filteredMovies = genres.map((genre) => {
@@ -34,7 +30,7 @@ function Home({ genereWithMoviesList }: reduxProps) {
       };
     });
 
-    dispatch(setMoviesWithGeneres(filteredMovies));
+    dispatch(setMoviesWithGenres(filteredMovies));
   };
 
   const handleLogout = () => {
@@ -64,8 +60,8 @@ function Home({ genereWithMoviesList }: reduxProps) {
 
         <SearchDropdown />
 
-        {genereWithMoviesList.map(
-          (genereMovies) =>
+        {moviesWithGenres?.map(
+          (genereMovies: any) =>
             genereMovies.movies.length !== 0 && (
               <MovieRow
                 key={genereMovies.id}
@@ -78,11 +74,3 @@ function Home({ genereWithMoviesList }: reduxProps) {
     </>
   );
 }
-
-const mapStateToProps = (state: any) => {
-  return {
-    genereWithMoviesList: state.setMoviesWithGenres,
-  };
-};
-
-export default connect(mapStateToProps)(Home);

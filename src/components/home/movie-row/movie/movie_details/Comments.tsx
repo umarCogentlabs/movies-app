@@ -12,7 +12,7 @@ export default function Comments({ handleComment }: any) {
 
   const CommentSchema = Yup.object().shape({
     comment: Yup.string()
-      .min(10, "Too Short!")
+      .min(5, "Too Short!")
       .required("Comment field cannot be empty"),
   });
 

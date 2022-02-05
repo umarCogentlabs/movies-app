@@ -1,4 +1,4 @@
-const initialState: object[] = [];
+import { createSlice } from "@reduxjs/toolkit";
 
 const setLikeFromPayload = (state: any[], payload: any) => {
   let isIDExist = false;
@@ -26,14 +26,21 @@ const setLikeFromPayload = (state: any[], payload: any) => {
   return likes;
 };
 
-const setLikes = (state = initialState, action: any) => {
-  switch (action.type) {
-    case "SET_LIKE":
-      return setLikeFromPayload(state, action.payload);
+export const slice = createSlice({
+  name: "likes",
+  initialState: {
+    likes: [],
+  },
+  reducers: {
+    setLike: (state, { payload }) => {
+      //@ts-ignore
+      state.likes = setLikeFromPayload(state.likes, payload);
+    },
+  },
+});
 
-    default:
-      return state;
-  }
-};
+export const { setLike } = slice.actions;
 
-export default setLikes;
+export const selectCount = (state: any) => state.counter.likes;
+
+export default slice.reducer;
