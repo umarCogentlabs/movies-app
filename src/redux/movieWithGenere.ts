@@ -55,6 +55,4 @@ export const slice = createSlice({
 
 export const { setMoviesWithGenres } = slice.actions;
 
-export const selectCount = (state: any) => state.moviesWithGenres;
-
 export default slice.reducer;

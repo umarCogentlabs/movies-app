@@ -47,6 +47,4 @@ export const slice = createSlice({
 
 export const { setComment } = slice.actions;
 
-export const selectCount = (state: any) => state.counter.likes;
-
 export default slice.reducer;

@@ -31,6 +31,4 @@ export const slice = createSlice({
 
 export const { setMovieDetailsArray } = slice.actions;
 
-export const selectMovieDetails = (state: any) => state.movieDetails;
-
 export default slice.reducer;
