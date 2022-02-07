@@ -26,11 +26,17 @@ const setCommentsFromPayload = (state: any[], payload: any) => {
   return comments;
 };
 
+interface State {
+  comments: [];
+}
+
+const initialState: State = {
+  comments: [],
+};
+
 export const slice = createSlice({
   name: "likes",
-  initialState: {
-    comments: [],
-  },
+  initialState,
   reducers: {
     setComment: (state, { payload }) => {
       //@ts-ignore

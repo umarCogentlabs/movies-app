@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router";
 import APIClient from "../../../common/API/index";
 import { useDispatch, useSelector } from "react-redux";
-import {} from "../../../../redux-toolkit/likesSlice";
-import { setLike } from "../../../../redux-toolkit/likesSlice";
+import {} from "../../../../redux/likes";
+import { setLike } from "../../../../redux/likes";
 
 interface Props {
   movie: { id: number; title: string; backdrop_path: string };
@@ -14,9 +14,8 @@ function Movie({ movie }: Props) {
   const apiClient = new APIClient();
   const imgUrl: string = apiClient.fetchMovieImage(movie.backdrop_path) || "";
 
-  const { likes } = useSelector((state: any) => state.likesSlice);
+  const { likes } = useSelector((state: any) => state.likes);
 
-  debugger;
   let liked = false;
   likes.forEach((like: any) => {
     if (like.id === movie.id) {

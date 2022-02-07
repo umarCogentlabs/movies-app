@@ -1,37 +1,19 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import MovieRow from "./movie-row/MovieRow";
-import axios from "axios";
 import "./styles/style.scss";
-import SearchDropdown from "./movie-row/search_movies/SearchDropdown";
-import APIClient from "../common/API/index";
+import SearchDropdown from "./movie-row/searchMovies/SearchDropdown";
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { setMoviesWithGenres } from "../../redux-toolkit/movieWithGenereSlice";
+import { fetchMoviesWithGenere } from "../../redux/movieWithGenere";
 
 export default function Home() {
   const username = localStorage.getItem("username") || "";
   let navigate = useNavigate();
-  const apiClient = new APIClient();
   const dispatch = useDispatch();
 
   const { moviesWithGenres } = useSelector(
-    (state: any) => state.movieWithGenereSlice
+    (state: any) => state.movieWithGenere
   );
-
-  const filterMovies = (genres: any[], movies: any[]) => {
-    const filteredMovies = genres.map((genre) => {
-      const newMovies = movies.filter((movie) =>
-        movie.genre_ids.includes(genre.id)
-      );
-
-      return {
-        ...genre,
-        movies: newMovies,
-      };
-    });
-
-    dispatch(setMoviesWithGenres(filteredMovies));
-  };
 
   const handleLogout = () => {
     localStorage.removeItem("username");
@@ -39,13 +21,7 @@ export default function Home() {
   };
 
   useEffect(() => {
-    axios.all([apiClient.fetchGeneres(), apiClient.fetchMovies()]).then(
-      axios.spread((...res) => {
-        const generes = res[0].data.genres;
-        const movies = res[1].data.results;
-        filterMovies(generes, movies);
-      })
-    );
+    dispatch(fetchMoviesWithGenere());
   }, []);
 
   return (

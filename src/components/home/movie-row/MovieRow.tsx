@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import Movie from "./movie/Movie";
 
 interface Props {

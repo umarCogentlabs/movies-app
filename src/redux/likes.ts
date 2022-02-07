@@ -25,12 +25,13 @@ const setLikeFromPayload = (state: any[], payload: any) => {
   const likes = [...state, like];
   return likes;
 };
-
+const initialState = {
+  likes: [],
+};
 export const slice = createSlice({
   name: "likes",
-  initialState: {
-    likes: [],
-  },
+  initialState,
+
   reducers: {
     setLike: (state, { payload }) => {
       //@ts-ignore

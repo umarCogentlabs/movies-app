@@ -2,9 +2,12 @@ import { useEffect } from "react";
 import { useParams } from "react-router";
 import APIClient from "../../../../common/API/index";
 import Comments from "./Comments";
-import { useDispatch, connect, useSelector } from "react-redux";
-import { setMovieDetailsArray } from "../../../../../redux-toolkit/movieDetailsSlice";
-import { setComment } from "../../../../../redux-toolkit/commentsSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchMovieDetails,
+  selectMovieDetails,
+} from "../../../../../redux/movieDetails";
+import { setComment } from "../../../../../redux/comments";
 
 interface MyFormValues {
   comment: string;
@@ -15,8 +18,10 @@ export default function MovieDetails() {
   const username = localStorage.getItem("username") || "";
   const apiClient = new APIClient();
   const dispatch = useDispatch();
-  const { movieDetails } = useSelector((state: any) => state.movieDetailsSlice);
-  const { comments } = useSelector((state: any) => state.commentsSlice);
+
+  const { movieDetails } = useSelector((state: any) => state.movieDetails);
+
+  const { comments } = useSelector((state: any) => state.comments);
   const imgUrl: string =
     apiClient.fetchMovieImage(movieDetails?.backdrop_path) || "";
 
@@ -28,11 +33,7 @@ export default function MovieDetails() {
   });
 
   useEffect(() => {
-    apiClient.fetchMovieDetails(movieId || "").then((res) => {
-      const movieDetailsData = res.data;
-      movieDetailsData.comments = [];
-      dispatch(setMovieDetailsArray(movieDetailsData));
-    });
+    dispatch(fetchMovieDetails(movieId || ""));
   }, []);
 
   const handleComment = (values: MyFormValues, { resetForm }: any) => {
