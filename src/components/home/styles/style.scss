@@ -126,14 +126,15 @@
         .movie-row {
             display: flex;
             flex-wrap: wrap;
+            column-gap: 35px;
+            row-gap: 35px;
 
             .movie {
                 cursor: pointer;
                 display: flex;
                 flex-direction: column;
                 max-width: 150px;
-                margin: 0 1rem 1rem 0;
-                min-width: 180px;
+
                 text-align: center;
                 align-items: center;
                 justify-content: space-between;
@@ -163,6 +164,11 @@
                     background-color: #efefef;
                     border-radius: 5px;
                     user-select: none;
+                    cursor: pointer;
+
+                    &:hover {
+                        font-weight: bold;
+                    }
 
                     a {
                         text-decoration: none;

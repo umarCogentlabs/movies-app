@@ -1,10 +1,8 @@
-import React from "react";
-import logo from "./logo.svg";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "../home/Home";
-import MovieDetails from "../home/movie-row/movie/movie_details/MovieDetails";
-import Login from "../login-signup/Login";
-import Register from "../login-signup/Register";
+import MovieDetails from "../home/movie-row/movie/movieDetails/MovieDetails";
+import Login from "../loginSignup/Login";
+import Register from "../loginSignup/Register";
 
 function Routing() {
   return (

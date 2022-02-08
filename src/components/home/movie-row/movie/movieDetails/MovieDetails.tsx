@@ -1,49 +1,36 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router";
-import { Formik, Form, Field } from "formik";
-import * as Yup from "yup";
 import APIClient from "../../../../common/API/index";
 import Comments from "./Comments";
-import { useDispatch, connect } from "react-redux";
-import {
-  SET_COMMENT,
-  SET_MOVIE_DETAILS,
-} from "../../../../common/redux-constants/index";
-
-function setMovieDetailsArray(payload: object[]) {
-  return { type: SET_MOVIE_DETAILS, payload };
-}
-
-function setComments(payload: {}) {
-  return { type: SET_COMMENT, payload };
-}
+import { useDispatch, useSelector } from "react-redux";
+import { fetchMovieDetails } from "../../../../../redux/movieDetails";
+import { setComment } from "../../../../../redux/comments";
 
 interface MyFormValues {
   comment: string;
 }
 
-function MovieDetails({ genereWithMoviesList, userComments }: any) {
+export default function MovieDetails() {
   let { movieId } = useParams<{ movieId: string }>();
   const username = localStorage.getItem("username") || "";
   const apiClient = new APIClient();
-  const imgUrl: string =
-    apiClient.fetchMovieImage(genereWithMoviesList?.backdrop_path) || "";
   const dispatch = useDispatch();
 
+  const { movieDetails } = useSelector((state: any) => state.movieDetails);
+
+  const { comments } = useSelector((state: any) => state.comments);
+  const imgUrl: string =
+    apiClient.fetchMovieImage(movieDetails?.backdrop_path) || "";
+
   let movieComments: any[] = [];
-  userComments?.forEach((likeComment: any) => {
-    if (likeComment.id === genereWithMoviesList.id) {
-      movieComments = likeComment.comment;
+  comments?.forEach((movie: any) => {
+    if (movie.id === movieDetails.id) {
+      movieComments = movie.comment;
     }
   });
 
   useEffect(() => {
-    apiClient.fetchMovieDetails(movieId || "").then((res) => {
-      const movieDetailsData = res.data;
-      movieDetailsData.comments = [];
-      dispatch(setMovieDetailsArray(movieDetailsData));
-    });
+    dispatch(fetchMovieDetails(movieId || ""));
   }, []);
 
   const handleComment = (values: MyFormValues, { resetForm }: any) => {
@@ -55,11 +42,11 @@ function MovieDetails({ genereWithMoviesList, userComments }: any) {
     };
 
     const commentPayload = {
-      id: genereWithMoviesList.id,
+      id: movieDetails.id,
       comment: commentWithUsername,
     };
 
-    dispatch(setComments(commentPayload));
+    dispatch(setComment(commentPayload));
   };
 
   return (
@@ -69,15 +56,13 @@ function MovieDetails({ genereWithMoviesList, userComments }: any) {
           <img src={imgUrl} alt="hi" />
         </div>
         <div className="details">
-          <h1>{genereWithMoviesList?.title}</h1>
+          <h1>{movieDetails?.title}</h1>
           <div className="info">
-            <span className="release-date">
-              {genereWithMoviesList?.release_date}
-            </span>
+            <span className="release-date">{movieDetails?.release_date}</span>
           </div>
           <div className="overview">
             <h4>Overview:</h4>
-            <p>{genereWithMoviesList?.overview}</p>
+            <p>{movieDetails?.overview}</p>
           </div>
         </div>
       </div>
@@ -98,12 +83,3 @@ function MovieDetails({ genereWithMoviesList, userComments }: any) {
     </div>
   );
 }
-
-const mapStateToProps = (state: any) => {
-  return {
-    genereWithMoviesList: state.setMovieDetailsArray,
-    userComments: state.setComments,
-  };
-};
-
-export default connect(mapStateToProps)(MovieDetails);

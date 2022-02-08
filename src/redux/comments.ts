@@ -1,4 +1,4 @@
-const initialState: object[] = [];
+import { createSlice } from "@reduxjs/toolkit";
 
 const setCommentsFromPayload = (state: any[], payload: any) => {
   let isIDExist = false;
@@ -26,14 +26,25 @@ const setCommentsFromPayload = (state: any[], payload: any) => {
   return comments;
 };
 
-const setComments = (state = initialState, action: any) => {
-  switch (action.type) {
-    case "SET_COMMENT":
-      return setCommentsFromPayload(state, action.payload);
+interface State {
+  comments: [];
+}
 
-    default:
-      return state;
-  }
+const initialState: State = {
+  comments: [],
 };
 
-export default setComments;
+export const slice = createSlice({
+  name: "likes",
+  initialState,
+  reducers: {
+    setComment: (state, { payload }) => {
+      //@ts-ignore
+      state.comments = setCommentsFromPayload(state.comments, payload);
+    },
+  },
+});
+
+export const { setComment } = slice.actions;
+
+export default slice.reducer;
