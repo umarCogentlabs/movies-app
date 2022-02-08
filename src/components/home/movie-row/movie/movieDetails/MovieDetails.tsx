@@ -3,10 +3,7 @@ import { useParams } from "react-router";
 import APIClient from "../../../../common/API/index";
 import Comments from "./Comments";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchMovieDetails,
-  selectMovieDetails,
-} from "../../../../../redux/movieDetails";
+import { fetchMovieDetails } from "../../../../../redux/movieDetails";
 import { setComment } from "../../../../../redux/comments";
 
 interface MyFormValues {
